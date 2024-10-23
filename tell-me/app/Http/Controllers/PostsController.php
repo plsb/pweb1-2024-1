@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class PostsController extends Controller
 {
     public function __construct(){
-        $this->middleware(['auth']);
+
     }
 
     public function index(Request $request){
@@ -44,7 +44,13 @@ class PostsController extends Controller
         return redirect()->route('posts.index');
     }
 
-    public function edit(Request $request, int $idPost){
+    public function edit(int $idPost){
+        $post = Post::find($idPost);
+
+        return view('posts.edit', compact('post'));
+    }
+
+    public function update(Request $request, int $idPost){
         $post = Post::where('id', '=', $idPost)->first();
 
         $post->content = $request->content;
